@@ -1,3 +1,3 @@
 <?php
-phpinfo();
+phpinasdasdfo()123213;
 ?>
