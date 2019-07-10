@@ -1,6 +1,6 @@
 <?php
 
-spl_autoload_register(class_autoload());
+spl_autoload_register("class_autoload()");
 
 // Class 目录定义
 if(!defined("CLASS_DIR"))
