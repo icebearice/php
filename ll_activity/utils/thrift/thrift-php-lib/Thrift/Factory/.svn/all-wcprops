@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Factory
+END
+TProtocolFactory.php
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Factory/TProtocolFactory.php
+END
+TStringFuncFactory.php
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Factory/TStringFuncFactory.php
+END
+TBinaryProtocolFactory.php
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Factory/TBinaryProtocolFactory.php
+END
+TCompactProtocolFactory.php
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Factory/TCompactProtocolFactory.php
+END
+TJSONProtocolFactory.php
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Factory/TJSONProtocolFactory.php
+END
+TTransportFactory.php
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Factory/TTransportFactory.php
+END

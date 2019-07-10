@@ -1,0 +1,214 @@
+<?php
+$_SERVER['RUN_MODE'] = 'staging';
+require_once dirname(dirname(__FILE__)) . "/include/config.php";
+require_once dirname(dirname(__FILE__)) . '/include/config.inc.php';
+require_once SYSDIR_UTILS . "/voucherServer.class.php";
+
+
+
+require_once SYSDIR_UTILS . "/logger.php";
+require_once SYSDIR_UTILS . "/DB.php";
+
+main();
+function main(){
+        //注意事项  
+        //1.将每日积分设置为0
+        //2.this->__taskTime的设置
+	   //3.发送代金券
+	    $now = time();
+		/*      if ($now <= 1535731200) {
+		        return;
+		}*/
+
+	    if ($now >= 1536422400) {
+				return;
+		}
+		FlamingoLogger::getInstance()->setLoggerFileName('/tmp/every_reward_logger.log');
+        $rewardHandler = new EveryReward();
+        for($i=0;$i<5;++$i){
+                $res = $rewardHandler->run();
+                if($res === TRUE){
+                        break;
+                }
+        }
+}
+
+class EveryReward{
+        private $__db;
+        private $__headIndex;
+        private $__taskTime;
+        private $__sortedId;
+        private $__voucherServer;
+        private $__allCreditInfo;
+        public function __construct(){
+                $this->__db = new Db();
+                $this->__db->use_db("write");
+                $this->__taskTime  ='2018-09-01';// date('Y-m-d',strtotime('-1 day'));
+                $this->__headIndex=0;//分页效果(用户排名开始的位置)
+                $this->__sortedId=0;//用户排名
+                $this->__voucherServer = new LLVoucherServer();
+        }
+
+        public function run(){
+                $this->__db->query('start transaction');
+                $limitArray = $this->getLimitedNum();
+                if(!isset($limitArray)){
+                        return FALSE;
+                }
+                //对于可以分割奖金的每个阶段的限制人数
+                //$v['id'] : 奖金ID
+                //$v['limited_num'] : 限制人数
+                //$v['money_id']:代金券ID
+                $this->getAllCreditInfo();
+                foreach($limitArray as $v){
+                        $sortArray = $this->getSortByCredit($this->__headIndex,$v['limited_num']); //获取排序信息
+                        if(!isset($sortArray)){
+                                return FALSE;
+                        }
+                        //$this->addHeadIndex($v['limited_num']); //更新排序初始下标__headIndex
+                        $this->addHeadIndex(count($sortArray)); //更新排序初始下标__headIndex
+                        $completed_num = count($sortArray); //此限制人数下实际领取奖励的人数
+                        if($this->updateScholarship($v['id'],$completed_num) === FALSE){ //更新奖品表中奖品的实际领取人数
+                                $this->__db->query('rollback');
+                                return FALSE;
+                        }
+                        if($this->insertScholarshipLog($sortArray,$v['id'],$v['money_id']) === FALSE){//插入日志
+                                $this->__db->query('rollback');
+                                return FALSE;
+                        }
+                }
+                 //清空积分表的今日积分
+                if($this->updateCredit() === FALSE){
+                    $this->__db->query('rollback');
+                    return FALSE;
+                }
+                $this->__db->query('commit');
+                return TRUE;
+        }
+
+        private function getAllCreditInfo() {
+                $sql = "select uin, credit, today_credit from ll_activity_credit order by today_credit desc, credit desc limit 3000";
+                var_dump($sql);
+                $this->__allCreditInfo = $this->__db->query($sql);
+                var_dump(count($this->__allCreditInfo));
+                return;
+        }
+       private function insertScholarshipLog($sortArray,$prizeId,$moneyId){
+                $addTime = date("Y-m-d H:i:s");
+
+                $loginKey = 'test-flamingo-login-key-abc';
+                $uuid='';
+                $productID=136;
+                $platform=102;
+                foreach($sortArray as $v){
+                        $insert['scholarship_id'] = $prizeId;
+                        $insert['uin'] = $v['uin'];
+                        $insert['today_credit']=$v['today_credit'];
+                        $insert['sorted'] = $v['uin_sort'];
+                        $insert['add_time']=$addTime;
+                        $insert['status']=1;
+						$checkVoucher = $this->checkHadVoucher($v['uin']);
+						if(!isset($checkVoucher)){
+							continue;
+						}
+						if($checkVoucher === TRUE){
+							continue;
+						}
+/*
+
+                        if($this->__voucherServer->sendVoucher($v['uin'],$loginKey,$uuid,$productID,$platform,$moneyId)===TRUE){
+                                $insert['status']=1;
+                                FlamingoLogger::getInstance()->Logln('代金券发放成功: '.'uin '.$v['uin'].' loginkey '.$loginKey.' money_id '.$moneyId);
+                        }else{
+                                $insert['status']=2;
+                                FlamingoLogger::getInstance()->Logln('代金券发放失败: '.'uin '.$v['uin'].' loginkey '.$loginKey.' money_id '.$moneyId);
+                        }
+*/
+                        if($this->__db->insert('ll_activity_scholarship_log',$insert)===FALSE){
+                                return FALSE;
+                        }
+                }
+                return TRUE;
+        }
+
+		public function checkHadVoucher($uin){
+			$sql = "select id from ll_activity_scholarship_log  where date_format(add_time,'%Y-%m-%d')= date_format(now(),'%Y-%m-%d') and uin={$uin};";
+			$res = $this->__db->query($sql);
+			if($res === FALSE){
+				return null;
+			}
+			if(empty($res)){
+				return FALSE;
+			}
+			return TRUE;
+		}
+
+        /*@return TRUE or FALSE*/
+        private function updateScholarship($prizeId,$completedNum){
+                $updateTime = date("Y-m-d H:i:s");
+                $sql = "update ll_activity_scholarship set completed_num = {$completedNum}, update_time='{$updateTime}' where id = {$prizeId};";
+                $res = $this->__db->query($sql);
+                return $res;
+        }
+
+        /*@return TRUE or FALSE*/
+        private function updateCredit(){
+                $updateTime = date("Y-m-d H:i:s");
+                $sql = "update ll_activity_credit set today_credit=0, update_time='{$updateTime}';";
+                $res = $this->__db->query($sql);
+                return $res;
+        }
+        private function getLimitedNum(){
+                $sql = "select id,limited_num,money_id from ll_activity_scholarship where task_time='{$this->__taskTime}' order by limited_num;";
+                $res = $this->__db->query($sql);
+                if($res === FALSE){
+                        return null;
+                }
+                return $res;
+        }
+        private function getSortByCredit($headIndex,$limitedNum){
+                $paiming = 1;
+                $paixu = 0;
+                $count = $limitedNum;
+                $result = array();
+                $len = count($this->__allCreditInfo);
+                for ($i = 0 ; $i < $len - 1; $i++) {
+                        $paixu ++;
+                        if ($i > 0 ) {
+                                if ($count <= 0 && $this->__allCreditInfo[$i]['today_credit'] != $this->__allCreditInfo[$i - 1]['today_credit']) {
+                                        break;
+                                }
+
+                        }
+                        if ($paiming > $headIndex) {
+                                $uin = $this->__allCreditInfo[$i]['uin'];
+                                $today_credit = $this->__allCreditInfo[$i]['today_credit'];
+                                //echo "uin :$uin paiming:$paiming paixu:$paixu count:$count headIndex:$headIndex limitedNum:$limitedNum today_credit:$today_credit \r\n";
+                                $info = array();
+                                $info['uin'] = $this->__allCreditInfo[$i]['uin'];
+                                $info['uin_sort'] = $paiming;
+                                $info['today_credit'] = $this->__allCreditInfo[$i]['today_credit'];
+                                $result[] = $info;
+                                $count --;
+                        }
+                        if ($this->__allCreditInfo[$i]['today_credit'] != $this->__allCreditInfo[$i+1]['today_credit']) {
+                                $paiming = $paixu+1;
+                        }
+
+                }
+                return $result;
+        }
+        private function getSortedId($flag){
+                if($flag === TRUE){
+                        ++$this->__sortedId;
+                }
+                return $this->__sortedId;
+        }
+
+        private function addHeadIndex($limited_num){
+                $this->__headIndex += $limited_num;
+        }
+
+}
+
+

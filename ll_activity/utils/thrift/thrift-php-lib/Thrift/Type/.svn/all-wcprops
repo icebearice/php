@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Type
+END
+TMessageType.php
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Type/TMessageType.php
+END
+TConstant.php
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Type/TConstant.php
+END
+TType.php
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Type/TType.php
+END

@@ -1,0 +1,400 @@
+<?php
+require_once SYSDIR_UTILS . "/userAuthServer.class.php";
+require_once SYSDIR_UTILS . "/voucherServer.class.php";
+require_once SYSDIR_UTILS . "/grouthServer.class.php";
+require_once SYSDIR_UTILS . "/error.class.php";
+require_once SYSDIR_UTILS . "/DB.php";
+require_once SYSDIR_UTILS . "/happynewyear/UserInfo.class.php";
+require_once SYSDIR_UTILS . "/XXRequestBase.php";
+define('URL','http://h5.testing.66shouyou.cn/ll_activity/201901_SpringFestival/');
+
+function addActivityUser($uin){  //将初次参加活动的用户入库
+	$__db = new Db();
+	$__db->use_db("write");
+	$sql = "select * from ll_activity_user_list_of_activity where uin = {$uin}";
+	$res = $__db->query($sql);
+	if (!$res){
+		$sql = "insert into ll_activity_user_list_of_activity (uin) values({$uin})";
+		$__db->query($sql);
+	}
+
+	$user_ip = getIp();  //记录用户IP
+	$sql = "select share_ip from user_share_count where share_ip = '{$user_ip}'";
+	$__db->query($sql);
+	if (!$res) {
+		$sql = "insert into user_share_count (uin,share_ip) values({$uin},'{$user_ip}')";
+		$__db->query($sql);
+	}
+}
+
+function checkPageLogin($login_key) {   //网页登陆验证
+	if (!$login_key) {
+		return [0,[]];
+	}
+
+	$uuid = md5("ll_web_login_{$_SERVER['HTTP_USER_AGENT']}");
+
+	file_put_contents('/tmp/ll_egg.log',"ll_web_login_{$_SERVER['HTTP_USER_AGENT']}"."\r\n",FILE_APPEND);
+	file_put_contents('/tmp/ll_egg.log',$uuid."\r\n",FILE_APPEND);
+	file_put_contents('/tmp/ll_egg.log',$login_key."\r\n",FILE_APPEND);
+
+	$login_key_arr = explode('_',$login_key);
+
+	if ($login_key_arr && count($login_key_arr) >2) {
+		$login_uuid = array_pop($login_key_arr);
+		$uin = $login_key_arr[2];
+		$product_id = intval($login_key_arr[1]);
+
+		if (!$auth->checkUserLogin($product_id, $uuid, 102, $uin, $login_key,$appid=0)) {
+			return [0,[]];
+		}                                                                                
+
+		$data['uuid'] = $uuid;
+		$data['login_key'] = $login_key;
+		$data['platform'] = 102;
+		$data['uin'] = $uin;
+		$data['appid'] = 0;
+		$data['product_id'] = $product_id;
+		return [1,$data];
+	}
+
+	return [0,[]];
+}
+
+function checkAppLogin($product_id,$uuid,$platform,$uin,$login_key,$appid){  //APP登陆验证
+	$auth = new LLUserAuthServer();
+	if (!$auth->checkUserLogin($product_id, $uuid, $platform, $uin, $login_key,$appid)) {
+		return [0,[]];
+	}                                                                                
+
+	$data['uuid'] = $uuid;
+	$data['login_key'] = $login_key;
+	$data['platform'] = $platform;
+	$data['uin'] = $uin;
+	$data['appid'] = $appid;
+	$data['product_id'] = $product_id;
+	return [1,$data];
+}
+
+function isUserLogined(){  //登陆验证
+	//网页登陆
+	$llusersessionid = isset($_REQUEST['llusersessionid'])? $_REQUEST['llusersessionid']:"";
+	//APP登录
+	$uin = isset($_REQUEST['uin']) ? $_REQUEST['uin']: 0;
+	$login_key = isset($_REQUEST['login_Key'])? $_REQUEST['login_Key']:'';
+	$uuid = isset($_REQUEST['uuid'])? $_REQUEST['uuid']:"";
+	$product_id = isset($_REQUEST['productID'])? $_REQUEST['productID'] : 136;
+	$platform = isset($_REQUEST['platformType'])? $_REQUEST['platformType']:102;	
+	$app_id = isset($_REQUEST['appID'])?$_REQUEST['appID']:0;
+
+	if (empty($login_key) && empty($llusersessionid)) {
+		return [0,[]];
+	}
+	if ($uuid) {  //APP登陆
+		return checkAppLogin($product_id,$uuid,$platform,$uin,$login_key,$app_id);
+	}
+	else {  //网页登陆
+		return checkPageLogin($llusersessionid);
+	}
+}
+
+function getPrizeinfo($prize_id){  //获取奖励信息
+	$__db = new Db();
+	$__db->use_db("write");
+	$sql = "select prize_name,prize_type,prize_total,prize_vip_level,prize_icon,prize_sour,vou_id from ll_activity_prize_list";
+	$sql.= " where prize_id = {$prize_id}";
+	return $__db->query($sql);
+}
+
+function registerAward($uin,$prize_id){  //登记获奖记录
+	$__db = new Db();
+	$__db->use_db("write");
+	$res = getPrizeInfo($prize_id);
+	$prize_name = $res[0]['prize_name'];
+	$prize_icon = $res[0]['prize_icon'];
+	$prize_sour = $res[0]['prize_sour'];
+	$prize_type = $res[0]['prize_type'];
+	$vou_id     = $res[0]['vou_id'];
+	$end_time   = '0000-00-00';
+	if ($prize_type == 2) {  //写入代金券有效期
+		$obj = new LLVoucherServer();
+		$info = $obj->getVoucherInfo($vou_id);
+		$end_time = date("Y-m-d",$info['expire_time']);
+	} 
+	$sql = "insert into ll_activity_user_accept_prize_info (uin,prize_id,prize_name,prize_sour,end_time)";
+	$sql.= " values({$uin},{$prize_id},'{$prize_name}','{$prize_sour}','{$end_time}')";
+	$__db->query($sql);
+	$row = $__db->db->affected_rows;
+	return $row;
+}
+
+function checkActivityDate($before = 0){  //检查活动时间
+	$response = array(
+		"code" => 0,
+		"err_msg" => '', 
+		"data" => '', 
+	);	
+
+	$today = time();
+	$before_start_date = strtotime('2019-01-01');
+	$before_end_date = strtotime('2019-01-20');
+	$formal_start_date = strtotime('2019-01-10');
+	$formal_end_date = strtotime('2019-02-10');
+
+	if ($before) {  //预热活动
+		if ($today < $before_start_date) {
+			$response['code'] = ErrorCode::Advance_Activity_Not_Start;
+			$response['err_msg'] = ErrorCode::getTaskError($response['code']);
+			echo json_encode($response);
+			exit();
+		} else if ($today > $before_end_date && $today < $formal_end_date) {
+			$response['code'] = ErrorCode::Advance_Activity_Has_End;
+			$response['err_msg'] = ErrorCode::getTaskError($response['code']);
+			$response['data'] = URL;
+			echo json_encode($response);
+			exit();
+		} else if ($today > $formal_end_date) {
+			$response['code'] = ErrorCode::Formal_Activity_Has_End;
+			$response['err_msg'] = ErrorCode::getTaskError($response['code']);
+			echo json_encode($response);
+			exit();
+		}
+	} else {  //正式活动
+		if ($today < $formal_start_date) {
+			$response['code'] = ErrorCode::Formal_Activity_Not_Start;
+			$response['err_msg'] = ErrorCode::getTaskError($response['code']);
+			echo json_encode($response);
+			exit();
+		} else if ($today > $formal_end_date) {
+			$response['code'] = ErrorCode::Formal_Activity_Has_End;
+			$response['err_msg'] = ErrorCode::getTaskError($response['code']);
+			echo json_encode($response);
+			exit();
+		}
+	}	
+}
+
+function getUserCostRanking($top,$uin,$total_top,$date = ''){  //获取用户$uin消费排名，及前$top用户的消费排名($total_top=1总榜，$total_top=0日榜)
+	$__db = new Db(); 
+	$__db->use_db("write");
+
+	if ($total_top) {  //总榜
+		$sql = "select uin,sum(num)/100 cost from ll_activity_user_cost_of_year group by uin order by cost desc";
+	} else {  //日榜
+		$today = date("Y-m-d");  //今日年月日
+		$sql = "select uin,num/100 cost from ll_activity_user_cost_of_year where task_time = '{$today}' group by uin order by cost desc";
+		if ($date) {  //指定日期
+			$sql = "select uin,num/100 cost from ll_activity_user_cost_of_year where task_time = '{$date}' group by uin order by cost desc";
+		}
+	}
+
+	$all_user = $__db->query($sql);  //所有用户
+	$top_user;  //上榜用户
+	$user_ranking = array();  //返回数据
+	$user_ranking[0] = array('uin' => $uin,'cost' => 0,'ranking' => '--','gap' => '--');  //$user_ranking[0]存放$uin数据：ID、消费额、排名、与上一名差距
+
+	if (!$all_user) {  //所有数据为空
+		return $user_ranking;
+	}
+
+	/* 1)确定上榜用户 */
+	if (count($all_user) <= $top) {  //总人数不大于$top（一般不可能）
+		$top_user = $all_user;
+	} else {
+		$top_user = array_slice($all_user,0,$top);  //先截取前$top个用户
+		$i = $top;  //从第$top+1个用户开始比较，若有相同消费额用户则追加在后面      
+		while($all_user[$i]['cost'] == $all_user[$i - 1]['cost']){
+			array_push($top_user,$all_user[$i]);
+			$i++;
+			if ($i == count($all_user)) {  //$all_user已穷尽
+				break;
+			}
+		}   
+	}  
+
+	$ranking;  //用户排名
+	$flag = 1;  //名次占位标志
+	$last_user_ranking = 1;  //上一个用户排名，初始值为TOP ONE
+	$last_user_cost = $all_user[0]['cost'];  //上一个用户消费额，初始值为TOP ONE
+	$last_ranking_cost = $all_user[0]['cost'];  //上一个名次消费额，初始值为TOP ONE
+	$gap = 0;  //用户消费额与上一个名次消费额的差距
+	for($i=0; $i<count($all_user); $i++){  //按序确定每一个用户的排名
+
+		if ($all_user[$i]['cost'] == $last_user_cost) {  //消费额与上一名相同,则排名与上一名相同
+			$ranking = $last_user_ranking;
+		} else {
+			$ranking = $flag;  //消费额不等，排名取名次占位标志的值
+			$gap = $last_ranking_cost - $all_user[$i]['cost'];  //计算与上一个名次消费额的差距
+			$last_ranking_cost = $all_user[$i]['cost'];  //更新名次消费额
+		}
+
+		if ($i < count($top_user)) {  //写入上榜用户的排名
+			$top_user[$i]['ranking'] = $ranking;
+		}
+		if ($all_user[$i]['uin'] == $uin) {  //写入$uin用户的排名
+			$user_ranking[0]['cost'] = $all_user[$i]['cost'];
+			$user_ranking[0]['ranking'] = $ranking;
+			$user_ranking[0]['gap'] = $gap;  //写入与上一个名次消费额的差距
+		}
+
+		if ($i >= count($top_user) && $user_ranking[0]['ranking'] != '--') {  //信息获取完毕，合并信息并退出
+			$user_ranking = array_merge($user_ranking,$top_user);
+			return $user_ranking;
+		}
+
+		$flag++;
+		$last_user_ranking = $ranking;
+		$last_user_cost = $all_user[$i]['cost'];
+	}
+
+	/* 只有当用户没有消费或者$all_user<=$top时才会执行到这里，然后返回 */
+	$user_ranking = array_merge($user_ranking,$top_user);
+	return $user_ranking; 
+}
+
+function getCostTopUserInfo($top,$uin,$total_top){  //获取$uin和$top榜用户的排名及基础信息($total_top=1总榜，$total_top=0日榜)
+	$top_user_info = getUserCostRanking($top,$uin,$total_top);
+	for($i=0; $i<count($top_user_info); $i++){
+		$uin = $top_user_info[$i]['uin'];  //用户ID
+		$user_data = UserInfo::getInstance()->getUserdata($uin);
+		$nickname = isset($user_data['base_data']['unickname']) ? $user_data['base_data']['unickname'] : "可爱的66玩家";  //用户昵称
+		$icon = isset($user_data['ext_data']['uico']) ? $user_data['ext_data']['uico'] : '';  //用户头像
+		$top_user_info[$i]['nickname'] = $nickname;
+		$top_user_info[$i]['icon'] = $icon;
+	}   
+	for ($i = 1; $i < count($top_user_info); $i ++) {  //格式化消费额
+		$cost = $top_user_info[$i]['cost'];
+		if ($cost < 1) {
+			$cost = substr(strval($cost),0,4);  //金额显示两位小数
+		} elseif ($cost >= 1 && $cost < 100) {
+			$cost = strval(intval($cost));
+		} else {
+			$cost = strval(intval($cost));
+			$num_arr = array();
+			$num_arr[] = $cost[0];
+			for ($j = 1; $j < strlen($cost) - 1; $j ++) {
+				$num_arr[$j] = '*';
+			}
+			$num_arr[] = $cost[strlen($cost) - 1];
+			$cost = implode($num_arr);
+		}
+		$top_user_info[$i]['cost'] = $cost;
+	}
+
+	$data = array();
+	$data['uin'] = $top_user_info[0];
+	$data['top_three'] = array_slice($top_user_info,1,3);
+	$data['others'] = array_slice($top_user_info,4);
+	return $data;
+}  
+
+/* 贡献值PK和邀请好友接力在完成任务脚本里入库，其他任务从此入库（写每日任务表和GO次数）*/
+function friendHelp($uin){  //好友助力
+	$__db = new Db();
+	$__db->use_db("write");
+
+	$today = date("Y-m-d");  //今日年月日
+	$sql = "select task_times from ll_activity_user_complete_daily_task_info where uin = {$uin} and task_id = 6 and task_day = '{$today}'";
+	$res = $__db->query($sql);
+	$today_share_times = 0;  //用户今日已分享次数
+	if ($res) {  //今日已分享
+		$today_share_times = $res[0]['task_times'];
+	}
+	$share_ip = getIp();
+	$sql = "select share_ip from user_share_count where share_ip = '{$share_ip}'";
+	$res = $__db->query($sql);
+	if (!$res) {  //该IP没有助力过
+		if ($today_share_times < 3) {  //今日助力次数小于3，则有效IP入库
+			$sql = "insert into user_share_count (uin,share_ip) values({$uin},'{$share_ip}')";
+			$res = $__db->query($sql);
+			/* 每日任务入库，同时GO++ */
+			if (!$today_share_times) {  //今日还没邀请
+				$task_day = date("Y-m-d");
+				$sql = "insert into ll_activity_user_complete_daily_task_info (uin,task_id,task_name,task_times,task_day)";
+				$sql.= " values({$uin},6,'邀请好友接力',1,'{$task_day}')";
+			} else {  //今日已有邀请数据
+				$sql = "update ll_activity_user_complete_daily_task_info set task_times = task_times + 1 where uin = {$uin} and task_id = 6";
+			}
+			$res = $__db->query($sql);
+			$sql = "update ll_activity_user_list_of_activity set go_times = go_times + 1 where uin = {$uin}";
+			$res = $__db->query($sql);
+			return 1;
+
+		} else {  //助力成功但该IP不入库
+			return 1;
+		}
+	} else {  //该IP已助力过
+		return 0;
+	}
+}
+
+function giveUserPrize($uin, $prize_id, $uuid, $productID, $login_key='', $platform=102,$appid = 0) {  //发放奖励
+	$__db = new Db();
+	$__db->use_db("write");
+
+	$login_key = 'test-flamingo-login-key-abc';
+	$sql = "select * from ll_activity_prize_list where prize_id = {$prize_id}";
+	$info = $__db->query($sql);
+	if (!isset($info) || count($info) <= 0) {
+		return 0;
+	}                                                                                                                                                    
+
+	$info = $info[0];
+	$accept_ip = getIp();
+	$insertData=array(
+		'uin'=>$uin,
+		'prize_id'=>$prize_id,
+		'prize_name'=>$info['prize_name'],
+		'status'=>1,
+		'add_time'=>date('Y-m-d H:i:s'),
+		'prize_status'=>0,
+		'prize_sour' =>$info['prize_sour'],
+		'accept_ip' =>$accept_ip
+	);  
+
+	if ($info['prize_type'] == 2) {  //代金券
+		$voucher = new LLVoucherServer();
+		if (TRUE === $voucher->sendVoucher($uin, $login_key, $uuid, $productID,$platform, $info['vou_id'], $appid)) {
+			$insertData['prize_status'] = 1;
+			FlamingoLogger::getInstance()->Logln('代金券发放成功: '.'uin '.$uin.' loginkey '.$login_key.' vou_id '.$info['vou_id']);
+		}else {
+			$insertData['prize_status'] = 0;
+			FlamingoLogger::getInstance()->Logln('代金券发放失败: '.'uin '.$uin.' loginkey '.$login_key.' vou_id '.$info['vou_id']);
+			$__db->insert('ll_activity_prize_give_log',$insertData);
+			return 0;
+		}
+	}
+
+	if ($info['prize_type'] == 1) {  //成长值
+		$grouth = new LLGrouthServer();
+		if (true === $grouth->addGrouthValue($uin,$info['prize_num'],$login_key, $uuid, $productID, $platform,$appid)) {
+			$insertData['prize_status'] = 1;
+			FlamingoLogger::getInstance()->Logln('成长值发放成功: '.'uin '.$uin.' loginkey '.$login_key.' prize_num '.$info['prize_num']);
+		}
+		else {
+			$insertData['prize_status'] = 0;
+			FlamingoLogger::getInstance()->Logln('成长值发放失败: '.'uin '.$uin.' loginkey '.$login_key.' prize_num '.$info['prize_num']);
+			$__db->insert('ll_activity_prize_give_log',$insertData);
+			return 0;
+		}
+
+	}
+
+	$__db->insert('ll_activity_prize_give_log',$insertData);
+	return 1;
+}
+
+function getRandResult($pro_array){  //抽奖函数
+	$result = '';
+	$pro_sum = array_sum($pro_array);
+	foreach ($pro_array as $key => $value) {
+		$rand_num = mt_rand(1,$pro_sum);
+		if ($rand_num <= $value) {
+			$result = $key;
+			break;
+		} else {
+			$pro_sum -= $value;
+		}
+	}
+	return $result;
+}

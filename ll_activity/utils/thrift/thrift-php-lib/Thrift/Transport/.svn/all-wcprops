@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Transport
+END
+TNullTransport.php
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Transport/TNullTransport.php
+END
+TSocket.php
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Transport/TSocket.php
+END
+TFramedTransport.php
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Transport/TFramedTransport.php
+END
+TTransport.php
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Transport/TTransport.php
+END
+THttpClient.php
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Transport/THttpClient.php
+END
+TBufferedTransport.php
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Transport/TBufferedTransport.php
+END
+TMemoryBuffer.php
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Transport/TMemoryBuffer.php
+END
+TSocketPool.php
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Transport/TSocketPool.php
+END
+TPhpStream.php
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Transport/TPhpStream.php
+END
+TCurlClient.php
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Transport/TCurlClient.php
+END

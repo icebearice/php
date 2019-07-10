@@ -1,0 +1,61 @@
+<?php
+/*************************************************************************
+ * File Name:test.php
+ * Author: lvchao.yan
+ * Created Time: 2018.12.20
+ * Desc:测试专用
+ *************************************************************************/
+
+require_once dirname(dirname(__DIR__)). "/include/config.php";
+require_once dirname(dirname(__DIR__)). "/include/config.inc.php";
+require_once SYSDIR_UTILS . "/error.class.php";
+require_once SYSDIR_UTILS . "/VIPInfo.php";
+require_once SYSDIR_UTILS . "/userInfoServer.class.php";
+require_once SYSDIR_UTILS . "/happynewyear/DailyTaskList.class.php";
+require_once SYSDIR_UTILS . "/happynewyear/MarkSexRoller.class.php";
+require_once SYSDIR_UTILS . "/happynewyear/UserInfo.class.php";
+require_once SYSDIR_UTILS . "/happynewyear/commonFunction.php";
+require_once SYSDIR_UTILS . "/voucherServer.class.php";
+require_once SYSDIR_UTILS . "/DB.php";
+$__db = new Db();
+$__db->use_db("write");
+
+$a = 3456.1223;
+$a = strval(intval($a));
+echo strlen($a)."\n";
+exit();
+$obj = new LLVoucherServer();
+$info = $obj->getVoucherInfo(2830);
+$start = date("Y-m-d h:i:s",$info['start_time']);
+$end = date("Y-m-d h:i:s",$info['expire_time']);
+echo $start."\n";
+echo $end."\n";
+exit();
+print_r($info);exit();
+$pro_array = [1 => 20, 2 => 30, 3 => 50];
+unset($pro_array[2]);
+print_r($pro_array);exit();
+$n = 10000000;
+$n_1 = 0; $n_2 = 0; $n_3 = 0;
+for ($i = 0; $i < $n; $i ++) {
+	$result = getRandResult($pro_array);
+	if (1 == $result) {
+	    $n_1 ++;
+	} elseif (2 == $result) {
+	    $n_2 ++;
+	} elseif (3 == $result) {
+	    $n_3 ++;
+	} else {
+	    exit();
+	}
+}
+$p1 = $n_1/$n; $p2 = $n_2/$n; $p3 = $n_3/$n;
+echo "1: $p1\n";
+echo "2: $p2\n";
+echo "3: $p3\n";
+exit();
+echo date("Y-m-d")."\n";exit();
+$sql = "select * from ll_activity_user_cost_of_new_year where uin = 3606 and not exists(select * from ll_activity_user_list_of_activity where uin = 100)";
+$res = $__db->query($sql);
+var_dump($res);exit();
+print_r($res);exit();

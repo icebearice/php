@@ -1,0 +1,137 @@
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/xxrepo/!svn/ver/181027/server/66server/ll_activity/daliyTopic
+END
+getVoteInfo.php
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/xxrepo/!svn/ver/201307/server/66server/ll_activity/daliyTopic/getVoteInfo.php
+END
+getAtMeMessage.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/xxrepo/!svn/ver/201307/server/66server/ll_activity/daliyTopic/getAtMeMessage.php
+END
+reply.php
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/xxrepo/!svn/ver/201307/server/66server/ll_activity/daliyTopic/reply.php
+END
+getNormalMessage.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/xxrepo/!svn/ver/201359/server/66server/ll_activity/daliyTopic/getNormalMessage.php
+END
+addSecondReply.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/xxrepo/!svn/ver/201307/server/66server/ll_activity/daliyTopic/addSecondReply.php
+END
+myReply.php
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/xxrepo/!svn/ver/201307/server/66server/ll_activity/daliyTopic/myReply.php
+END
+hotReplyList.php
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/xxrepo/!svn/ver/201407/server/66server/ll_activity/daliyTopic/hotReplyList.php
+END
+config.php
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/xxrepo/!svn/ver/181027/server/66server/ll_activity/daliyTopic/config.php
+END
+audit.php
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/xxrepo/!svn/ver/181027/server/66server/ll_activity/daliyTopic/audit.php
+END
+development_config.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/xxrepo/!svn/ver/201307/server/66server/ll_activity/daliyTopic/development_config.php
+END
+resultCode.php
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/xxrepo/!svn/ver/201475/server/66server/ll_activity/daliyTopic/resultCode.php
+END
+getSingleReplyInfo.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/xxrepo/!svn/ver/201307/server/66server/ll_activity/daliyTopic/getSingleReplyInfo.php
+END
+topicList.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/xxrepo/!svn/ver/201582/server/66server/ll_activity/daliyTopic/topicList.php
+END
+production_config.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/xxrepo/!svn/ver/201401/server/66server/ll_activity/daliyTopic/production_config.php
+END
+getTnCode.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/xxrepo/!svn/ver/181027/server/66server/ll_activity/daliyTopic/getTnCode.php
+END
+replyDetail.php
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/xxrepo/!svn/ver/201307/server/66server/ll_activity/daliyTopic/replyDetail.php
+END
+like.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/xxrepo/!svn/ver/201307/server/66server/ll_activity/daliyTopic/like.php
+END
+addVote.php
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/xxrepo/!svn/ver/201307/server/66server/ll_activity/daliyTopic/addVote.php
+END
+replyList.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/xxrepo/!svn/ver/201756/server/66server/ll_activity/daliyTopic/replyList.php
+END
+secondReply.php
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/xxrepo/!svn/ver/201307/server/66server/ll_activity/daliyTopic/secondReply.php
+END
+tipOff.php
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/xxrepo/!svn/ver/201307/server/66server/ll_activity/daliyTopic/tipOff.php
+END
+common.php
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/xxrepo/!svn/ver/201582/server/66server/ll_activity/daliyTopic/common.php
+END

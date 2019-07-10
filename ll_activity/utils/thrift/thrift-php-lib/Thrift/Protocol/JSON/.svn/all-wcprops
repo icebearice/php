@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Protocol/JSON
+END
+LookaheadReader.php
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Protocol/JSON/LookaheadReader.php
+END
+BaseContext.php
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Protocol/JSON/BaseContext.php
+END
+ListContext.php
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Protocol/JSON/ListContext.php
+END
+PairContext.php
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Protocol/JSON/PairContext.php
+END

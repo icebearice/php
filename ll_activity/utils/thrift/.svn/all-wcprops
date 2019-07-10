@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift
+END
+GPUserServer.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/GPUserServer.php
+END
+GPUser.thrift
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/GPUser.thrift
+END
+rpcDataReport.thrift
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/rpcDataReport.thrift
+END
+xxFilterSpamText.thrift
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/xxFilterSpamText.thrift
+END
+xxSearchNickname.thrift
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/xxSearchNickname.thrift
+END
+xxSearchForum.thrift
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/xxSearchForum.thrift
+END

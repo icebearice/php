@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Protocol
+END
+TBinaryProtocol.php
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Protocol/TBinaryProtocol.php
+END
+TCompactProtocol.php
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Protocol/TCompactProtocol.php
+END
+TJSONProtocol.php
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Protocol/TJSONProtocol.php
+END
+TMultiplexedProtocol.php
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Protocol/TMultiplexedProtocol.php
+END
+TProtocol.php
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Protocol/TProtocol.php
+END
+TBinaryProtocolAccelerated.php
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Protocol/TBinaryProtocolAccelerated.php
+END
+TProtocolDecorator.php
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Protocol/TProtocolDecorator.php
+END

@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Exception
+END
+TTransportException.php
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Exception/TTransportException.php
+END
+TException.php
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Exception/TException.php
+END
+TProtocolException.php
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Exception/TProtocolException.php
+END
+TApplicationException.php
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Exception/TApplicationException.php
+END

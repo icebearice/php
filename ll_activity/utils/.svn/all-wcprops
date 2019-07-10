@@ -1,0 +1,257 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/xxrepo/!svn/ver/199464/server/66server/ll_activity/utils
+END
+LLActivityDatastatistics.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/xxrepo/!svn/ver/185104/server/66server/ll_activity/utils/LLActivityDatastatistics.php
+END
+userAuthServer.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/xxrepo/!svn/ver/171892/server/66server/ll_activity/utils/userAuthServer.class.php
+END
+LLActivityScholarManager.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/xxrepo/!svn/ver/171999/server/66server/ll_activity/utils/LLActivityScholarManager.php
+END
+LLActivityScratchHomePageManager.php
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/xxrepo/!svn/ver/174085/server/66server/ll_activity/utils/LLActivityScratchHomePageManager.php
+END
+LLActivityGoldenBollPrize.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/xxrepo/!svn/ver/182735/server/66server/ll_activity/utils/LLActivityGoldenBollPrize.php
+END
+LLActivityTaskManager.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/xxrepo/!svn/ver/185104/server/66server/ll_activity/utils/LLActivityTaskManager.php
+END
+XXRequestBase.php
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/xxrepo/!svn/ver/185104/server/66server/ll_activity/utils/XXRequestBase.php
+END
+LLActivityGoldenBallManager.php
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/xxrepo/!svn/ver/185104/server/66server/ll_activity/utils/LLActivityGoldenBallManager.php
+END
+LLGameBoardManager.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/xxrepo/!svn/ver/187687/server/66server/ll_activity/utils/LLGameBoardManager.class.php
+END
+flamingoDingDingMessage.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/xxrepo/!svn/ver/179303/server/66server/ll_activity/utils/flamingoDingDingMessage.class.php
+END
+LLActivityBaseData.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/xxrepo/!svn/ver/182736/server/66server/ll_activity/utils/LLActivityBaseData.php
+END
+LLActivityCreditManager.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/xxrepo/!svn/ver/185104/server/66server/ll_activity/utils/LLActivityCreditManager.php
+END
+LLActivityAggPrize.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/xxrepo/!svn/ver/185104/server/66server/ll_activity/utils/LLActivityAggPrize.php
+END
+LLGetMessageCenter.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/xxrepo/!svn/ver/201362/server/66server/ll_activity/utils/LLGetMessageCenter.php
+END
+flamingoBaseActivityLimitThriftManager.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/xxrepo/!svn/ver/178977/server/66server/ll_activity/utils/flamingoBaseActivityLimitThriftManager.class.php
+END
+sensitiveWordsServer.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/xxrepo/!svn/ver/171424/server/66server/ll_activity/utils/sensitiveWordsServer.class.php
+END
+LLActivityMessageManager.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/xxrepo/!svn/ver/171999/server/66server/ll_activity/utils/LLActivityMessageManager.php
+END
+DailyTaskList.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/xxrepo/!svn/ver/182835/server/66server/ll_activity/utils/DailyTaskList.class.php
+END
+LLGameDataManager.php
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/xxrepo/!svn/ver/182734/server/66server/ll_activity/utils/LLGameDataManager.php
+END
+LLDaliyTopicManager.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/xxrepo/!svn/ver/201309/server/66server/ll_activity/utils/LLDaliyTopicManager.class.php
+END
+LLActivityPrizeManager.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/xxrepo/!svn/ver/171999/server/66server/ll_activity/utils/LLActivityPrizeManager.php
+END
+XXTEA.php
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/XXTEA.php
+END
+flamingoBaseThriftLink.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/flamingoBaseThriftLink.class.php
+END
+LLActivityUserKnockEgg.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/xxrepo/!svn/ver/185104/server/66server/ll_activity/utils/LLActivityUserKnockEgg.php
+END
+error.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/xxrepo/!svn/ver/199276/server/66server/ll_activity/utils/error.class.php
+END
+AcceptYearPrize.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/xxrepo/!svn/ver/182835/server/66server/ll_activity/utils/AcceptYearPrize.class.php
+END
+LLActivityMyReward.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/xxrepo/!svn/ver/182735/server/66server/ll_activity/utils/LLActivityMyReward.php
+END
+flamingoSMSThriftManager.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/flamingoSMSThriftManager.class.php
+END
+flamingoETCD.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/flamingoETCD.class.php
+END
+grouthServer.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/xxrepo/!svn/ver/190904/server/66server/ll_activity/utils/grouthServer.class.php
+END
+LLGameCommunityManager.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/xxrepo/!svn/ver/187687/server/66server/ll_activity/utils/LLGameCommunityManager.class.php
+END
+voucherServer.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/xxrepo/!svn/ver/182736/server/66server/ll_activity/utils/voucherServer.class.php
+END
+REDIS.php
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/REDIS.php
+END
+VIPInfo.php
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/xxrepo/!svn/ver/190940/server/66server/ll_activity/utils/VIPInfo.php
+END
+flamingoCSUnityHandler.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/flamingoCSUnityHandler.class.php
+END
+logger.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/xxrepo/!svn/ver/185104/server/66server/ll_activity/utils/logger.php
+END
+LLIconManager.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/xxrepo/!svn/ver/199464/server/66server/ll_activity/utils/LLIconManager.class.php
+END
+TnCode.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/xxrepo/!svn/ver/185104/server/66server/ll_activity/utils/TnCode.class.php
+END
+userInfoServer.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/userInfoServer.class.php
+END
+DB.php
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/xxrepo/!svn/ver/185104/server/66server/ll_activity/utils/DB.php
+END
+LLActivityScratchUserManager.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/xxrepo/!svn/ver/174021/server/66server/ll_activity/utils/LLActivityScratchUserManager.php
+END
+LLActivityScratchManager.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/xxrepo/!svn/ver/185104/server/66server/ll_activity/utils/LLActivityScratchManager.php
+END

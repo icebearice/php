@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/xxrepo/!svn/ver/182837/server/66server/ll_activity/utils/happynewyear
+END
+ContriValuePK.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/xxrepo/!svn/ver/185206/server/66server/ll_activity/utils/happynewyear/ContriValuePK.class.php
+END
+AcceptYearPrize.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/xxrepo/!svn/ver/184977/server/66server/ll_activity/utils/happynewyear/AcceptYearPrize.class.php
+END
+MarkSexRoller.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/xxrepo/!svn/ver/186678/server/66server/ll_activity/utils/happynewyear/MarkSexRoller.class.php
+END
+UserInfo.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/xxrepo/!svn/ver/185098/server/66server/ll_activity/utils/happynewyear/UserInfo.class.php
+END
+commonFunction.php
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/xxrepo/!svn/ver/186667/server/66server/ll_activity/utils/happynewyear/commonFunction.php
+END
+robotData.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/xxrepo/!svn/ver/186795/server/66server/ll_activity/utils/happynewyear/robotData.php
+END
+timer.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/xxrepo/!svn/ver/185148/server/66server/ll_activity/utils/happynewyear/timer.php
+END
+dayResetTimer.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/xxrepo/!svn/ver/186768/server/66server/ll_activity/utils/happynewyear/dayResetTimer.php
+END
+DailyTaskList.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/xxrepo/!svn/ver/185099/server/66server/ll_activity/utils/happynewyear/DailyTaskList.class.php
+END
+givePrizeTimer.php
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/xxrepo/!svn/ver/186796/server/66server/ll_activity/utils/happynewyear/givePrizeTimer.php
+END

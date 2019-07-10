@@ -1,0 +1,47 @@
+<?php
+/*************************************************************************
+ * File Name: share.php
+ * Author: lvchao.yan
+ * Created Time: 2018.12.25
+ * Desc: 分享页
+ *************************************************************************/
+
+require_once dirname(dirname(__DIR__)). "/include/config.php";
+require_once dirname(dirname(__DIR__)). "/include/config.inc.php";
+require_once SYSDIR_UTILS . "/error.class.php";
+require_once SYSDIR_UTILS . "/REDIS.php";
+require_once SYSDIR_UTILS . "/happynewyear/UserInfo.class.php";
+require_once SYSDIR_UTILS . "/happynewyear/commonFunction.php";
+define('IP_CACHE_TIME',604800);
+
+checkActivityDate();
+
+$response = array(
+	"code" => 0,
+	"err_msg" => '',
+	"data" => '',
+);
+
+$__cache = new myRedis();
+$__cache->use_redis("read");
+
+$uin = isset($_REQUEST['uin'])?$_REQUEST['uin']:0;
+
+$user_data_arr = UserInfo::getInstance()->getUserData($uin);
+if(!$user_data_arr){
+	echo json_encode($response);
+	exit();
+}
+
+$uid = $user_data_arr['base_data']['uid'];
+$unickname = isset($user_data_arr['base_data']['unickname']) ? $user_data_arr['base_data']['unickname'] : "可爱的66玩家";
+$uicon = isset($user_data_arr['ext_data']['uico']) ? $user_data_arr['ext_data']['uico'] : "";
+$response['data'] =array('uid'=>$uid,'unickname'=>$unickname,'uicon'=>$uicon);
+$share_ip = getIp();
+$key = $uin.'_share_ip';
+$ip = $__cache->redis->get($key);
+if (!$ip){
+	$__cache->redis->set($key,$share_ip,IP_CACHE_TIME);
+}
+echo json_encode($response);
+exit();

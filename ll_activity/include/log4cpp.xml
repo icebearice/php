@@ -1,0 +1,30 @@
+<configuration xmlns="http://logging.apache.org/log4php/">
+    <!-- ConsoleAppender 
+    <appender name="myConsoleAppender" class="LoggerAppenderConsole" />
+    -->
+
+    <appender name="myConsoleAppender" class="LoggerAppenderConsole" >
+        <layout class="LoggerLayoutPattern">
+            <param name="conversionPattern" value="[%date{Y-m-d H:i:s,u}] [%pid] [%F:%L] [%logger] %message%newline" />
+        </layout>
+    </appender>
+
+    <appender name="H5GameAppender" class="LoggerAppenderDailyFile">
+        <layout class="LoggerLayoutPattern">
+            <param name="conversionPattern" value="[%date{Y-m-d H:i:s,u}] [%pid] [%F:%L] [%logger] %message%newline" />
+        </layout>
+        <param name="file" value="/data/logs/h5_game/h5_game_%s.log" />
+        <param name="datePattern" value="Ymd" />
+    </appender>
+
+<!-- logger -->
+
+    <logger name="H5GameCenter">
+        <appender_ref ref="H5GameAppender" />
+    </logger>
+    
+    <root>
+        <level value="DEBUG" />
+        <!-- <appender_ref ref="myConsoleAppender" /> -->
+    </root>
+</configuration>

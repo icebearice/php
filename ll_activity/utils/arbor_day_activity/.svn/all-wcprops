@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/xxrepo/!svn/ver/188977/server/66server/ll_activity/utils/arbor_day_activity
+END
+DailyTask.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/xxrepo/!svn/ver/188463/server/66server/ll_activity/utils/arbor_day_activity/DailyTask.class.php
+END
+playnewgame_task_timer.php
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/xxrepo/!svn/ver/188642/server/66server/ll_activity/utils/arbor_day_activity/playnewgame_task_timer.php
+END
+UserInfo.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/xxrepo/!svn/ver/188463/server/66server/ll_activity/utils/arbor_day_activity/UserInfo.class.php
+END
+commonFunction.php
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/xxrepo/!svn/ver/188977/server/66server/ll_activity/utils/arbor_day_activity/commonFunction.php
+END
+robotData.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/xxrepo/!svn/ver/188468/server/66server/ll_activity/utils/arbor_day_activity/robotData.php
+END
+dayResetTimer.php
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/xxrepo/!svn/ver/187804/server/66server/ll_activity/utils/arbor_day_activity/dayResetTimer.php
+END
+Watering.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/xxrepo/!svn/ver/188463/server/66server/ll_activity/utils/arbor_day_activity/Watering.class.php
+END
+shareAPP_task_timer.php
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/xxrepo/!svn/ver/188579/server/66server/ll_activity/utils/arbor_day_activity/shareAPP_task_timer.php
+END

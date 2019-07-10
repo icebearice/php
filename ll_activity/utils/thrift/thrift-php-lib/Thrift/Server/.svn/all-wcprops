@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Server
+END
+TForkingServer.php
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Server/TForkingServer.php
+END
+TServer.php
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Server/TServer.php
+END
+TServerSocket.php
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Server/TServerSocket.php
+END
+TSimpleServer.php
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Server/TSimpleServer.php
+END
+TServerTransport.php
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/Server/TServerTransport.php
+END

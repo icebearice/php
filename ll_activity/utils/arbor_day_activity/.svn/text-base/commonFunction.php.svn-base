@@ -1,0 +1,300 @@
+<?php
+require_once SYSDIR_UTILS . "/userAuthServer.class.php";
+require_once SYSDIR_UTILS . "/voucherServer.class.php";
+require_once SYSDIR_UTILS . "/grouthServer.class.php";
+require_once SYSDIR_UTILS . "/error.class.php";
+require_once SYSDIR_UTILS . "/DB.php";
+require_once SYSDIR_UTILS . "/arbor_day_activity/UserInfo.class.php";
+require_once SYSDIR_UTILS . "/XXRequestBase.php";
+require_once SYSDIR_UTILS . "/Ding.class.php";
+
+function addActivityUser($uin){  //将初次参加活动的用户入库
+	$__db = new Db();
+	$__db->use_db("write");
+	$sql = "select * from arbor_day_user_list where uin = {$uin}";
+	$res = $__db->query($sql);
+	if (!$res){
+		$sql = "insert into arbor_day_user_list (uin) values({$uin})";
+		$__db->query($sql);
+	}
+}
+
+function checkPageLogin($login_key) {   //网页登陆验证
+	if (!$login_key) {
+		return [0,[]];
+	}
+
+	$uuid = md5("ll_web_login_{$_SERVER['HTTP_USER_AGENT']}");
+
+	file_put_contents('/tmp/ll_egg.log',"ll_web_login_{$_SERVER['HTTP_USER_AGENT']}"."\r\n",FILE_APPEND);
+	file_put_contents('/tmp/ll_egg.log',$uuid."\r\n",FILE_APPEND);
+	file_put_contents('/tmp/ll_egg.log',$login_key."\r\n",FILE_APPEND);
+
+	$login_key_arr = explode('_',$login_key);
+
+	if ($login_key_arr && count($login_key_arr) > 2) {
+		$login_uuid = array_pop($login_key_arr);
+		$uin = $login_key_arr[2];
+		$product_id = intval($login_key_arr[1]);
+		$auth = new LLUserAuthServer();
+		@file_put_contents('/tmp/lvchaodebug.log',$product_id."\n",FILE_APPEND);
+		@file_put_contents('/tmp/lvchaodebug.log',$uuid."\n",FILE_APPEND);
+		@file_put_contents('/tmp/lvchaodebug.log',$uin."\n",FILE_APPEND);
+		@file_put_contents('/tmp/lvchaodebug.log',$login_key."\n",FILE_APPEND);
+
+		if (!$auth->checkUserLogin($product_id, $uuid, 102, $uin, $login_key,$appid=0)) {
+			return [0,[]];
+		}                                                                                
+
+		$data['uuid'] = $uuid;
+		$data['login_key'] = $login_key;
+		$data['platform'] = 102;
+		$data['uin'] = $uin;
+		$data['appid'] = 0;
+		$data['product_id'] = $product_id;
+		return [1,$data];
+	}
+
+	return [0,[]];
+}
+
+function checkAppLogin($product_id,$uuid,$platform,$uin,$login_key,$appid){  //APP登陆验证
+	$auth = new LLUserAuthServer();
+	if (!$auth->checkUserLogin($product_id, $uuid, $platform, $uin, $login_key,$appid)) {
+		return [0,[]];
+	}                                                                                
+
+	$data['uuid'] = $uuid;
+	$data['login_key'] = $login_key;
+	$data['platform'] = $platform;
+	$data['uin'] = $uin;
+	$data['appid'] = $appid;
+	$data['product_id'] = $product_id;
+	return [1,$data];
+}
+
+function isUserLogined(){  //登陆验证
+	//网页登陆
+	$llusersessionid = isset($_REQUEST['llusersessionid'])? $_REQUEST['llusersessionid']:"";
+	//APP登录
+	$uin = isset($_REQUEST['uin']) ? $_REQUEST['uin']: 0;
+	$login_key = isset($_REQUEST['login_Key'])? $_REQUEST['login_Key']:'';
+	$uuid = isset($_REQUEST['uuid'])? $_REQUEST['uuid']:"";
+	$product_id = isset($_REQUEST['productID'])? $_REQUEST['productID'] : 136;
+	$platform = isset($_REQUEST['platformType'])? $_REQUEST['platformType']:102;	
+	$app_id = isset($_REQUEST['appID'])?$_REQUEST['appID']:0;
+
+	if (empty($login_key) && empty($llusersessionid)) {
+		return [0,[]];
+	}
+	if ($uuid) {  //APP登陆
+		return checkAppLogin($product_id,$uuid,$platform,$uin,$login_key,$app_id);
+	}
+	else {  //网页登陆
+		return checkPageLogin($llusersessionid);
+	}
+}
+
+function checkActivityDate(){  //检查活动时间
+	$response = array(
+		"code" => 0,
+		"err_msg" => '', 
+		"data" => '', 
+	);	
+
+	$today = time();
+	$start_date = strtotime('2019-03-11');
+	$end_date = strtotime('2019-03-16');
+
+	if ($today < $start_date) {
+		$response['code'] = ErrorCode::Arbor_Day_Not_Start;
+		$response['err_msg'] = ErrorCode::getTaskError($response['code']);
+		echo json_encode($response);
+		exit();
+	} else if ($today >= $end_date) {
+		$response['code'] = ErrorCode::Arbor_Day_Has_End;
+		$response['err_msg'] = ErrorCode::getTaskError($response['code']);
+		echo json_encode($response);
+		exit();
+	}
+}
+
+function giveUserPrize($uin, $prize_id, $uuid, $productID, $login_key='', $platform=102,$appid = 0) {  //发放奖励
+	$__db = new Db();
+	$__db->use_db("write");
+
+	$login_key = 'test-flamingo-login-key-abc';
+	$sql = "select prize_type, prize_name, prize_num, vou_id, prize_sour from arbor_day_prize_list where prize_id = {$prize_id}";
+	$res = $__db->query($sql);
+
+	$prize_type   = $res[0]["prize_type"];
+	$prize_name   = $res[0]["prize_name"];
+	$prize_num    = $res[0]["prize_num"];
+	$vou_id       = $res[0]["vou_id"];
+	$prize_sour   = $res[0]["prize_sour"];
+	$jd_card      = "";
+	$prize_status = 0;
+
+	switch ($prize_type) {
+	case 1:  //代金券
+		$voucher = new LLVoucherServer();
+		if (TRUE === $voucher->sendVoucher($uin, $login_key, $uuid, $productID, $platform, $vou_id, $appid)) {
+			$prize_status = 1;
+			FlamingoLogger::getInstance()->Logln('代金券发放成功: '.'uin '.$uin.' loginkey '.$login_key.' vou_id '.$vou_id);
+		}else {
+			FlamingoLogger::getInstance()->Logln('代金券发放失败: '.'uin '.$uin.' loginkey '.$login_key.' vou_id '.$vou_id);
+		}
+		break;
+
+	case 2:  //京东卡
+		$sql = "select id, card_id from arbor_day_activity_jd_card where card_num = {$prize_num} and is_used = 0 limit 1";
+		$res = $__db->query($sql);
+		if (!$res) {  //京东卡已耗尽
+			@file_put_contents('/tmp/arbor_day_activity_error.log', date('Y-m-d H:i:s')."---commonFunction.php.1---京东卡已耗尽\n\n",  FILE_APPEND);
+			break;
+		} else {
+			$id = $res[0]["id"];
+			//$jd_card = $res[0]["card_id"];		
+			$jd_card = "ABCD-ABCD-ABCD-ABCD";  ///////////////////////////		
+
+			$__db->query("start transaction");
+			$sql = "update arbor_day_activity_jd_card set is_used = 1 where id = {$id}";  //修改京东卡库存
+			$__db->query($sql);
+			$error = $__db->db->error;
+			if ($__db->db->affected_rows <= 0) {
+				$__db->query("rollback");
+				$jd_card = "";		
+				@file_put_contents('/tmp/arbor_day_activity_error.log', date('Y-m-d H:i:s')."---commonFunction.php.2---".$error."\n\n",  FILE_APPEND);
+				break;
+			}
+
+			$today_timestamp = strtotime(date("Y-m-d"));
+			$sql = "update arbor_day_user_accept_prize_list set jd_card = '{$jd_card}' where 1 = 1";  //写入京东卡密
+			$sql.= " and uin = {$uin} and prize_id = {$prize_id} and unix_timestamp(accept_time) >= {$today_timestamp}";
+			$__db->query($sql);
+			$error = $__db->db->error;
+			if ($__db->db->affected_rows <= 0) {
+				$__db->query("rollback");
+				$jd_card = "";		
+				@file_put_contents('/tmp/arbor_day_activity_error.log', date('Y-m-d H:i:s')."---commonFunction.php.3---".$error."\n\n",  FILE_APPEND);
+				break;
+			}
+
+			if (!$__db->query("commit")) {
+				$error = $__db->db->error;
+				$__db->query("rollback");
+				$jd_card = "";
+				@file_put_contents('/tmp/arbor_day_activity_error.log', date('Y-m-d H:i:s')."---commonFunction.php.4---".$error."\n\n",  FILE_APPEND);
+				break;
+			}   
+
+			$prize_status = 1;
+			break;
+		}
+
+	case 3:  //平台币
+		$paycenter_key = PAYCENTER_KEY;
+		$paycenter_secret = PAYCENTER_SECRET;
+		$t = time();
+		$order_sn = "ll_arbor_day_reward_" . $t;
+		$coin_type = "llcoin";
+		$reason = "66植树节活动奖品";
+		$type = 1;
+		$token = "ThisIsToken" . rand(1,999);
+		$rebate = $prize_num * 100;
+		$source_type = 21;
+		$req_arr = array(
+			'orderSn' => $order_sn,
+			'uin' => $uin,
+			'reason' => $reason,
+			'key' => $paycenter_key,
+			'rebate' => $rebate,
+			'type' => $type,
+			'coin_type' => $coin_type,  
+			'token' => $token,
+			't' => $t,
+			'source_type' => $source_type,
+		);  
+
+		$sign = createVerify($req_arr, $paycenter_secret);
+		$url = "http://paycenter.guopan.cn/recharge/liu_rebate?rebate={$rebate}&orderSn={$order_sn}&t={$t}&key={$paycenter_key}";
+		$url.= "&type={$type}&uin={$uin}&reason={$reason}&coin_type={$coin_type}&source_type={$source_type}&token={$token}&sign={$sign}";
+		$p_result = curl_https($url);       
+		$result = json_decode($p_result, true);
+		if($result['code'] != 200){
+			@file_put_contents("/tmp/sgLog/task_reward.log", "【".date('Y-m-d H:i:s')."】uin:{$uin} 加平台币:{$platform_coin} 失败\n", FILE_APPEND);
+		}else{
+			@file_put_contents("/tmp/sgLog/task_reward.log", "【".date('Y-m-d H:i:s')."】uin:{$uin} 加平台币:{$platform_coin} 成功\n", FILE_APPEND);
+			$prize_status = 1;
+		}
+		break;
+
+	case 4:  //成长值
+		$grouth = new LLGrouthServer();
+		if (true === $grouth->addGrouthValue($uin, $prize_num, $login_key, $uuid, $productID, $platform,$appid)) {
+			$prize_status = 1;
+			FlamingoLogger::getInstance()->Logln('成长值发放成功: '.'uin '.$uin.' loginkey '.$login_key.' prize_num '.$prize_num);
+		}
+		else {
+			FlamingoLogger::getInstance()->Logln('成长值发放失败: '.'uin '.$uin.' loginkey '.$login_key.' prize_num '.$prize_num);
+		}
+		break;
+
+	case 5:  //实物
+		$prize_status = 1;
+		break;
+
+	default :
+		return;
+	}
+
+	$sql = "insert into arbor_day_prize_give_log (uin, prize_id, prize_name, jd_card, prize_sour, prize_status)";
+	$sql.= " values({$uin}, {$prize_id}, '{$prize_name}', '{$jd_card}', '{$prize_sour}', {$prize_status})";
+	$__db->query($sql);
+
+	if (!$prize_status) {  //机器人报警
+		$url = "https://oapi.dingtalk.com/robot/send?access_token=5f574350a90dc267a39858bdfbfc4fd5aa11e4230d7bcdd83e73f35c068390d4";
+		$ding = new Ding($url);
+		$data = "# 奖励发放失败  \r\nuin: $uin  \r\nprize_id: $prize_id  \r\nprize_name: $prize_name  \r\nvoucher_id: $vou_id";
+		$ding->send_markdown("警报！！！", $data);
+	}
+}
+
+function createVerify($request, $secret) {
+	ksort($request);
+	$result = ''; 
+	foreach ($request as $key => $value) {
+		if ($key == 'sign') {
+			continue;
+		}   
+		$result .= $value;
+	}   
+	$result .= $secret;                                                         
+	$result = md5($result);
+	return $result;
+}
+
+function curl_https($url){
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+	$response = curl_exec($ch);
+	curl_close($ch);
+	return $response; 
+}    
+
+function getRandResult($pro_array){  //抽奖函数
+	$result = '';
+	$pro_sum = array_sum($pro_array);
+	foreach ($pro_array as $key => $value) {
+		$rand_num = mt_rand(1,$pro_sum);
+		if ($rand_num <= $value) {
+			$result = $key;
+			break;
+		} else {
+			$pro_sum -= $value;
+		}
+	}
+	return $result;
+}

@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/include
+END
+config.inc.php
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/include/config.inc.php
+END
+development_config.inc.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/xxrepo/!svn/ver/201323/server/66server/ll_activity/include/development_config.inc.php
+END
+global.php
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/include/global.php
+END
+log4cpp.xml
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/include/log4cpp.xml
+END
+production_config.inc.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/xxrepo/!svn/ver/201348/server/66server/ll_activity/include/production_config.inc.php
+END
+config.php
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/include/config.php
+END

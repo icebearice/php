@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/gen-php/rpcdatareport
+END
+GPH5GameLoginLogService.php
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/gen-php/rpcdatareport/GPH5GameLoginLogService.php
+END
+GPLoginLogReqService.php
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/gen-php/rpcdatareport/GPLoginLogReqService.php
+END
+GPGameThirdTransferLoginLogService.php
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/gen-php/rpcdatareport/GPGameThirdTransferLoginLogService.php
+END
+GPGameSdkLoginLogService.php
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/gen-php/rpcdatareport/GPGameSdkLoginLogService.php
+END
+GPLoginLogService.php
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/gen-php/rpcdatareport/GPLoginLogService.php
+END
+GPGameInstallListService.php
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/gen-php/rpcdatareport/GPGameInstallListService.php
+END
+Types.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/gen-php/rpcdatareport/Types.php
+END

@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/StringFunc
+END
+Mbstring.php
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/StringFunc/Mbstring.php
+END
+TStringFunc.php
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/StringFunc/TStringFunc.php
+END
+Core.php
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/xxrepo/!svn/ver/170513/server/66server/ll_activity/utils/thrift/thrift-php-lib/Thrift/StringFunc/Core.php
+END
