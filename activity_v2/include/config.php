@@ -1,14 +1,15 @@
 <?php
 
-spl_autoload_extensions('.inc,.php');
-spl_autoload_register("class_autoload");
-
 // Class 目录定义
 if(!defined("CLASS_DIR"))
     define("CLASS_DIR", dirname(dirname(__FILE__)) . "/class/" );
+set_include_path(CLASS_DIR);
+spl_autoload_extensions('.inc,.php,.class.php');
+spl_autoload_register();
 
-function class_autoload($classname) {
-    $classpath = CLASS_DIR . $classname . '.class' . spl_autoload_extensions();
+
+function __autoload($classname) {
+    $classpath = CLASS_DIR . $classname;
     /**
      * 文件存在的情况下 is_file比file_exists要快N倍
      * 文件不存在的情况下 is_file比file_exists要慢
