@@ -1,6 +1,7 @@
 <?php
 
 include dirname(dirname(__FILE__)) . "/include/config.php";
+spl_autoload_extensions('.php,.inc');
 
 $bwm = new Car("bwm", 100);
 $audi = new Car("audi", 111);
@@ -13,5 +14,4 @@ echo json_encode(spl_autoload_functions()) . "\n";
 // 无参数则获取 默认拓展名列表
 echo json_encode(spl_autoload_extensions()) . "\n";
 // 参数可修改默认拓展名列表
-spl_autoload_extensions('.php,.inc');
 echo json_encode(spl_autoload_extensions()) . "\n";
