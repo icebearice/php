@@ -13,5 +13,5 @@ echo json_encode(spl_autoload_functions()) . "\n";
 // 无参数则获取 默认拓展名列表
 echo json_encode(spl_autoload_extensions()) . "\n";
 // 参数可修改默认拓展名列表
-spl_autoload_extensions(".php,.inc");
+spl_autoload_extensions('.php,.inc');
 echo json_encode(spl_autoload_extensions()) . "\n";
