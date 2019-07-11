@@ -1,7 +1,7 @@
 <?php
 
 include dirname(dirname(__FILE__)) . "/include/config.php";
-spl_autoload_extensions('.php,.inc');
+spl_autoload_extensions('.inc','.php');
 
 $bwm = new Car("bwm", 100);
 $audi = new Car("audi", 111);
