@@ -9,6 +9,7 @@ spl_autoload_register('my_autoload');
 
 
 function my_autoload($classname) {
+    echo $classname . "\n";
     /**
      * 文件存在的情况下 is_file比file_exists要快N倍
      * 文件不存在的情况下 is_file比file_exists要慢
