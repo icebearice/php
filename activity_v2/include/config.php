@@ -5,10 +5,10 @@ if(!defined("CLASS_DIR"))
     define("CLASS_DIR", dirname(dirname(__FILE__)) . "/class/" );
 set_include_path(CLASS_DIR);
 spl_autoload_extensions('.inc,.php,.class.php');
-spl_autoload_register();
+spl_autoload_register('my_autoload');
 
 
-function __autoload($classname) {
+function my_autoload($classname) {
     $classpath = CLASS_DIR . $classname;
     /**
      * 文件存在的情况下 is_file比file_exists要快N倍
