@@ -7,4 +7,4 @@ $audi = new Car("audi", 111);
 
 echo $audi->getBrand() . "\n";
 echo $bwm->getBrand() . "\n";
-print spl_autoload_functions();
+echo json_encode(spl_autoload_functions());
