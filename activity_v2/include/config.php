@@ -7,7 +7,7 @@ if(!defined("CLASS_DIR"))
     define("CLASS_DIR", dirname(dirname(__FILE__)) . "/class/" );
 
 function class_autoload($classname) {
-    $classpath = CLASS_DIR . $classname . '.class.php';
+    $classpath = CLASS_DIR . $classname . '.class';
     /**
      * 文件存在的情况下 is_file比file_exists要快N倍
      * 文件不存在的情况下 is_file比file_exists要慢
