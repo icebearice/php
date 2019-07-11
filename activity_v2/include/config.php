@@ -1,5 +1,6 @@
 <?php
 
+spl_autoload_extensions('.inc,.php');
 spl_autoload_register("class_autoload");
 
 // Class 目录定义
