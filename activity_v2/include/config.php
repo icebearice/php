@@ -9,7 +9,7 @@ spl_autoload_register('my_autoload');
 
 function my_autoload($classname) {
     set_include_path(CLASS_DIR);
-    echo $classname . "\n";
+    echo get_include_path() . "\n";
     spl_autoload_extensions('.class.php');
     /**
      * 文件存在的情况下 is_file比file_exists要快N倍
