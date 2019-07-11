@@ -8,7 +8,7 @@ spl_autoload_register('my_autoload');
 
 
 function my_autoload($classname) {
-    set_include_path(CLASS_DIR);
+//    set_include_path(CLASS_DIR);
     echo get_include_path() . "\n";
     spl_autoload_extensions('.class.php');
     /**
