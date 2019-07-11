@@ -5,7 +5,7 @@ if(!defined("CLASS_DIR"))
     define("CLASS_DIR", dirname(dirname(__FILE__)) . "/class/" );
 set_include_path(CLASS_DIR);
 spl_autoload_extensions('.inc,.php,.class.php');
-spl_autoload_register('my_autoload');
+spl_autoload_register();
 
 
 function my_autoload($classname) {
